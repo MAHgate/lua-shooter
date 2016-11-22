@@ -1,5 +1,7 @@
 function love.load()
 
+-- Flags to tell me the state of the game
+
 new_game = false
 game_play = true
 game_over = false
@@ -9,8 +11,9 @@ game_over = false
 screen_w , screen_h = 800 , 600
 
 -- Create a table to hold the ship's details
-
 ship = {}
+
+-- TODO: Add a ship's sprite as one of the table entries
 
 ship.x = 400
 ship.y = 550
@@ -25,6 +28,8 @@ b_list = {}
 
 -- Bullet info
 
+-- TODO: Add a bullet sprite as one of the table entries
+
 b_gap = 0
 b_rep = 1
 b_vel = -200
@@ -33,21 +38,39 @@ b_h = 4
 
 -- Create a table to store our aliens
 
+-- TODO: Add an alien spritesheet as one of the table entries
+
 a_list = {}
+
+-- The size of the grid
 
 grid_w , grid_h = 6 , 3
 
+-- How long for the alien animation side to side?
+
 a_rep = 0.5
 
+-- The location of the bottom of the alien grid
+
 bx , by = 100 , 100
+
+-- The location of the top of the alien grid
+
 tx , ty = screen_w - bx , 300
+
+-- The gap between aliens
 
 gap_x = ( tx - bx ) / ( grid_w - 1 )
 gap_y = ( ty - by ) / ( grid_h - 1 )
 
+-- How fast is the alien grid going to move?
+
 x_spd , y_spd = 40 , 10
 
+-- TODO: does this variable do anything?
 n = 1
+
+-- Create a grid of aliens
 
 for j = 0 , grid_h - 1 do
 	for i = 0 , grid_w - 1 do
@@ -78,6 +101,8 @@ end
 
 function love.draw()
 
+-- My flags tell me which draw routine to use. Hopefully the choices are self-evident
+
 if new_game then
 	new_game_screen()
 end
@@ -95,8 +120,9 @@ end
 -- Draw game play screen
 
 function game_play_screen()
-	-- Draw the ship
 
+	-- Draw the ship.
+	-- TODO: actually have a ship sprite here!
 
 	love.graphics.circle( "fill" , ship.x , ship.y , 10 )
 
@@ -106,11 +132,13 @@ function game_play_screen()
 	for index , b in pairs( b_list ) do
 
 		-- Draw a circle where the bullet is
+		-- TODO: actually have a bullet sprite here!
 
 		love.graphics.circle( "fill" , b.x , b.y , b.w )
 	end
 
 	-- Draw a circle where the alien is
+	-- TODO: actually have an alien sprite here!
 
 	for index , a in pairs( a_list ) do
 		love.graphics.circle( "fill" , a.x , a.y , a.w )
@@ -121,7 +149,9 @@ end
 -- Routine to run when game is playing
 
 function game_update( dt )
+
 	-- Trap the left and right key-presses and move ship
+	-- TODO: deal with the weird prioritization of X over Z
 
 	ship.vx = 0
 
@@ -164,6 +194,8 @@ function game_update( dt )
 	end
 
 	-- Move the aliens
+	-- TODO: decide whether the floating from side to side is a good idea
+	-- TODO: include a counter which would animate a sprite
 
 	for i = #a_list , 1 , -1 do
 		a =a_list[ i ]
@@ -200,16 +232,22 @@ end
 
 
 -- Screen to display at the end of a game
+
 function game_over_screen()
+
 -- First draw the game play as it finished
+
 game_play_screen()
+
+-- TODO: Use a nice font and some color!
 
 love.graphics.print( "Game Over" , 100 , 100 )
 
 end
 
 
--- Reset the counter when the space bar is released
+-- Reset the bullet timer when the space bar is released
+-- TODO: Use events to drive the other key-presses: it just looks nicer
 
 function love.keyreleased( key )
 	if key == " " then
